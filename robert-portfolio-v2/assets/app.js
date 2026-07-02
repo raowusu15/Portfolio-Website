@@ -50,11 +50,25 @@
     onScroll();
     var toggle = document.getElementById('navToggle');
     var links = document.querySelector('.nav__links');
+    var overlay = document.querySelector('.nav__overlay');
+    function closeMenu() {
+      links.classList.remove('open');
+      toggle.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function openMenu() {
+      links.classList.add('open');
+      toggle.classList.add('open');
+      if (overlay) overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
     if (toggle && links) {
       toggle.addEventListener('click', function () {
-        var open = links.classList.toggle('open'); toggle.classList.toggle('open', open);
+        links.classList.contains('open') ? closeMenu() : openMenu();
       });
-      links.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { links.classList.remove('open'); toggle.classList.remove('open'); }); });
+      links.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMenu); });
+      if (overlay) overlay.addEventListener('click', closeMenu);
     }
   });
 
